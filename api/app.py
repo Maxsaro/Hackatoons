@@ -4,6 +4,22 @@ import firebase_admin
 from firebase_admin import credentials, auth
 import os, json
 
+# Servir arquivos da pasta public sem precisar usar /public/ na URL
+app = Flask(__name__, static_folder="../public", static_url_path="")
+CORS(app)
+
+# Rota principal -> carrega index.html da raiz
+@app.route("/")
+def index():
+    return send_from_directory("..", "index.html")
+
+# Segurança extra: serve qualquer arquivo da pasta raiz (se precisar, ex: favicon.ico)
+@app.route("/<path:path>")
+def serve_file(path):
+    if os.path.exists(os.path.join("..", path)):
+        return send_from_directory("..", path)
+    return "Arquivo não encontrado", 404
+
 # importa lógica da API
 from api.API import gerar_novas_perguntas, gerar_nota_perguntas, ApiGeminiException
 
