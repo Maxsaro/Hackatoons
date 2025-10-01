@@ -5,7 +5,7 @@ from firebase_admin import credentials, auth
 import os, json
 
 # importa lógica da API
-from API import gerar_novas_perguntas, gerar_nota_perguntas, ApiGeminiException
+from api.API import gerar_novas_perguntas, gerar_nota_perguntas, ApiGeminiException
 
 app = Flask(__name__, static_folder="../", static_url_path="")
 CORS(app)
