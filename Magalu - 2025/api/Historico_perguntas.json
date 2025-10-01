@@ -1,0 +1,17 @@
+[
+    "Descreva o papel das \"entradas\" e \"bandeiras\" na expansão territorial do Brasil Colônia e na exploração da mão de obra indígena.",
+    "Qual a diferença fundamental entre a memória RAM e um dispositivo de armazenamento como um SSD ou HD?",
+    "Explique o papel do DNS (Sistema de Nomes de Domínio) no processo de acesso a um site na internet.",
+    "O que é uma API (Interface de Programação de Aplicações) e qual a sua utilidade no desenvolvimento de software?",
+    "Qual a diferença entre uma linguagem de programação compilada e uma interpretada, e dê um exemplo de cada?",
+    "Qual a diferença entre o protocolo TCP e o UDP, e em que tipo de aplicação cada um seria mais adequado?",
+    "Descreva os conceitos de Herança e Polimorfismo na Programação Orientada a Objetos, explicando como se relacionam.",
+    "Qual a diferença principal entre um banco de dados SQL (relacional) e um NoSQL (não relacional) em termos de estrutura de dados e escalabilidade?",
+    "Explique o que é um sistema de controle de versão, como o Git, e por que ele é considerado uma ferramenta essencial no desenvolvimento de software moderno.",
+    "Explique a diferença entre um processo e uma thread e em que cenário o uso de múltiplas threads é vantajoso.",
+    "Descreva o que é a notação Big O e por que ela é fundamental para a análise da eficiência de algoritmos.",
+    "Explique o que é um firewall e descreva a diferença fundamental entre um firewall de filtragem de pacotes e um firewall de aplicação.",
+    "Explique o Teorema CAP (Consistência, Disponibilidade e Tolerância a Partições) e descreva um cenário prático onde um sistema priorizaria a consistência em detrimento da disponibilidade (CP) e outro onde priorizaria a disponibilidade em detrimento da consistência (AP).",
+    "Descreva o conceito de pipelining em uma CPU moderna, detalhando os três tipos de hazards (estruturais, de dados e de controle) que podem comprometer seu desempenho e explique uma técnica utilizada para mitigar os hazards de controle.",
+    "Explique a diferença fundamental entre criptografia simétrica e assimétrica, e descreva como ambas são utilizadas em conjunto para estabelecer uma comunicação segura em um protocolo como o TLS/SSL."
+]

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Interativo com IA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="spinner"></div>
+        <p id="loading-text">Aguarde...</p>
+    </div>
+
+    <nav class="top-bar">
+        <div class="top-bar-content">
+            <a href="#" class="top-bar-logo"><i class="fa-solid fa-graduation-cap"></i> FocoTotal</a>
+            <div class="user-info hidden">
+                <span id="user-email-display"></span>
+                <button id="btn-logout" class="btn-logout"><i class="fa-solid fa-sign-out-alt"></i> Sair</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="app-container">
+        <main>
+            <!-- Tela de Login -->
+            <section id="tela-login" class="tela active">
+                <h2>Acesse para Jogar</h2>
+                <form id="form-login">
+                    <input type="email" id="login-email" placeholder="Seu e-mail" required>
+                    <input type="password" id="login-password" placeholder="Sua senha" required>
+                    <button type="submit" class="btn-principal">Entrar</button>
+                    <p class="auth-switch">Não tem conta? <a href="#" id="show-register">Registre-se</a></p>
+                </form>
+            </section>
+            
+            <!-- Tela de Registo -->
+            <section id="tela-registo" class="tela">
+                <h2>Crie sua Conta</h2>
+                <form id="form-registo">
+                    <input type="email" id="registo-email" placeholder="Seu e-mail" required>
+                    <input type="password" id="registo-password" placeholder="Crie uma senha (mín. 6 caracteres)" required>
+                    <button type="submit" class="btn-principal">Registrar</button>
+                    <p class="auth-switch">Já tem conta? <a href="#" id="show-login">Faça Login</a></p>
+                </form>
+            </section>
+
+            <!-- Tela de Início (Seleção de Tema) -->
+            <section id="tela-inicio" class="tela">
+                <h2>Gerador de Quiz com IA</h2>
+                <p>Escolha um tema para que a IA gere as perguntas do seu quiz.</p>
+                <form id="form-gerar-quiz">
+                    <input type="text" id="tema" placeholder="Digite um tema (ex: História do Brasil)">
+                     <label for="quantidade">Quantidade de Perguntas:</label>
+                    <input type="number" id="quantidade" value="3" min="1" max="5">
+                    <label for="dificuldade">Dificuldade:</label>
+                    <select id="dificuldade">
+                        <option value="fácil">Fácil</option>
+                        <option value="média" selected>Média</option>
+                        <option value="difícil">Difícil</option>
+                    </select>
+                    <button type="submit" class="btn-principal"><i class="fa-solid fa-play"></i> Gerar e Começar Quiz</button>
+                </form>
+            </section>
+
+            <!-- Tela de Pergunta -->
+            <section id="tela-pergunta" class="tela">
+                <h3 id="pergunta-contador"></h3>
+                <div class="card-pergunta"><p id="texto-pergunta">Carregando...</p></div>
+                <form id="form-resposta">
+                    <textarea id="input-resposta" rows="3" placeholder="Digite sua resposta..."></textarea>
+                    <button type="submit" class="btn-principal"><i class="fa-solid fa-check"></i> Verificar</button>
+                </form>
+            </section>
+
+            <!-- Tela de Feedback -->
+            <section id="tela-feedback" class="tela">
+                <div id="card-feedback" class="card-feedback">
+                    <h2 id="feedback-titulo">--</h2>
+                    <p id="feedback-texto">--</p>
+                    <p><strong>Nota da IA:</strong> <span id="feedback-nota">--</span>/100</p>
+                </div>
+                <button id="btn-proxima" class="btn-principal"><i class="fa-solid fa-arrow-right"></i> Próxima</button>
+            </section>
+            
+            <!-- Tela Final -->
+            <section id="tela-final" class="tela">
+                <h2>Fim de Jogo!</h2>
+                <p>Quiz finalizado!</p>
+                <button id="btn-reiniciar" class="btn-principal"><i class="fa-solid fa-redo"></i> Jogar Novamente</button>
+            </section>
+        </main>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
