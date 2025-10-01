@@ -1,8 +1,8 @@
 export class ApiService {
     constructor(authToken) {
         this.authToken = authToken;
-        this.gerarUrl = 'http://localhost:5000/api/gerar-pergunta';
-        this.avaliarUrl = 'http://localhost:5000/api/avaliar-resposta';
+        this.gerarUrl = '/api/gerar-pergunta';
+        this.avaliarUrl = '/api/avaliar-resposta';
     }
 
     async _fetchApi(url, bodyData) {
@@ -37,3 +37,4 @@ export class ApiService {
         return await this._fetchApi(this.avaliarUrl, body);
     }
 }
+
