@@ -86,7 +86,7 @@ def gerar_novas_perguntas(tema: str, dificuldade: str, quantidade: int):
             raise ApiGeminiException("A resposta da API do Gemini pode ter sido bloqueada por segurança.")
 
     except rq.exceptions.RequestException as e:
-        raise ApiGeminiException(f"Erro na requisição para a API do Gemini: {e}")
+        raise ApiGeminiException(f"Erro na requisição para a API do Gemini")
     
 def gerar_nota_perguntas(resposta: str, pergunta: str) -> dict:
  
@@ -131,4 +131,5 @@ def gerar_nota_perguntas(resposta: str, pergunta: str) -> dict:
           raise ApiGeminiException("A resposta da IA não veio no formato JSON esperado ou foi bloqueada.")
   except rq.exceptions.RequestException as e:
 
-      raise ApiGeminiException(f"Erro na requisição para a API do Gemini: {e}")
+      raise ApiGeminiException(f"Erro na requisição para a API do Gemini")
+
