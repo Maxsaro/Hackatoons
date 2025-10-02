@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             await signInWithEmailAndPassword(auth, email, password);
         } catch (error) {
-            alert(`Erro no login: ${error.message}`);
+            alert("Erro: email ou senha incorretos. Tente novamente.");
         } finally {
             hideLoading();
         }
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             await createUserWithEmailAndPassword(auth, email, password);
         } catch (error) {
-            alert(`Erro no registo: ${error.message}`);
+            alert("Erro: email ou senha inválidos. Tente novamente.");
         } finally {
             hideLoading();
         }
@@ -130,23 +130,38 @@ document.addEventListener('DOMContentLoaded', () => {
         const tema = document.getElementById('tema').value;
         const dificuldade = document.getElementById('dificuldade').value;
         const quantidade = parseInt(document.getElementById('quantidade').value, 10);
-        
+    
         if (!tema) {
             alert("Por favor, digite um tema para o quiz.");
             return;
         }
 
-        showLoading('A IA está a gerar as suas perguntas...');
-        try {
-            perguntasDoQuiz = await apiService.gerarPerguntas(tema, dificuldade, quantidade);
-            iniciarQuiz();
-        } catch (error) {
-            alert(`Erro ao gerar quiz: ${error.message}`);
-        } finally {
-            hideLoading();
-        }
-    });
+        // Função de retry exponencial
+        async function tentarGerarQuiz(tentativa = 1, atraso = 10000) {
+            showLoading(`A IA está a gerar as suas perguntas... (tentativa ${tentativa})`);
+            try {
+                perguntasDoQuiz = await apiService.gerarPerguntas(tema, dificuldade, quantidade);
+                iniciarQuiz();
+                hideLoading();
+            } catch (error) {
+                console.error(`Erro tentativa ${tentativa}:`, error.message);
 
+                if (atraso > 80000) {
+                    hideLoading();
+                    alert("Erro: Timeout ao tentar gerar quiz. Tente novamente mais tarde.");
+                    return;
+                }
+
+                // Espera o atraso e tenta novamente
+                setTimeout(() => {
+                    tentarGerarQuiz(tentativa + 1, atraso * 2);
+                }, atraso);
+            }
+        }
+        
+          tentarGerarQuiz();
+    });
+    
     function iniciarQuiz() {
         indicePerguntaAtual = 0;
         mostrarProximaPergunta();
@@ -174,19 +189,33 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        showLoading('A IA está a avaliar a sua resposta...');
-        try {
-            const avaliacao = await apiService.avaliarResposta(perguntaAtual, respostaUsuario);
-            feedbackTitulo.textContent = avaliacao.nota >= 60 ? "Boa Resposta!" : "Pode Melhorar!";
-            feedbackTexto.textContent = avaliacao.analise;
-            feedbackNota.textContent = avaliacao.nota;
-            cardFeedback.className = 'card-feedback ' + (avaliacao.nota >= 60 ? 'correto' : 'incorreto');
-            mostrarTela('feedback');
-        } catch (error) {
-            alert(`Erro ao avaliar resposta: ${error.message}`);
-        } finally {
-            hideLoading();
+        // Retry exponencial para avaliar resposta
+        async function tentarAvaliarResposta(tentativa = 1, atraso = 10000) {
+            showLoading(`A IA está a avaliar a sua resposta... (tentativa ${tentativa})`);
+            try {
+                const avaliacao = await apiService.avaliarResposta(perguntaAtual, respostaUsuario);
+                feedbackTitulo.textContent = avaliacao.nota >= 60 ? "Boa Resposta!" : "Pode Melhorar!";
+                feedbackTexto.textContent = avaliacao.analise;
+                feedbackNota.textContent = avaliacao.nota;
+                cardFeedback.className = 'card-feedback ' + (avaliacao.nota >= 60 ? 'correto' : 'incorreto');
+                mostrarTela('feedback');
+                hideLoading();
+            } catch (error) {
+                console.error(`Erro tentativa ${tentativa} ao avaliar resposta:`, error.message);
+
+                if (atraso > 80000) {
+                    hideLoading();
+                    alert("Erro: Timeout ao avaliar resposta. Tente novamente mais tarde.");
+                    return;
+                }
+
+                setTimeout(() => {
+                    tentarAvaliarResposta(tentativa + 1, atraso * 2);
+                }, atraso);
+            }
         }
+
+        tentarAvaliarResposta();
     });
 
     btnProxima.addEventListener('click', () => {
